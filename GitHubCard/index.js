@@ -2,14 +2,16 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-
+let myInfo = axios.get(`https://api.github.com/users/deejayeaster`);
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
 
    Skip to Step 3.
 */
-
+myInfo.then(data => {
+  console.log("response", data);
+});
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */
@@ -45,6 +47,12 @@ const followersArray = [];
 </div>
 
 */
+
+function createCards(gitInfo) {
+  const card = document.createElement("div");
+  const img = document.createElement("img");
+  const title = document.createElement("h3");
+}
 
 /* List of LS Instructors Github username's: 
   tetondan
