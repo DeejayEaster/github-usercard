@@ -15,7 +15,6 @@ myInfo
   .then(git => {
     // console.log("response", git);
     const gitStuff = git.data;
-    console.log(gitStuff);
     // making and appanding the card.
     const element = createCards(gitStuff);
     cards.appendChild(element);
@@ -41,30 +40,21 @@ const followersArray = [];
 axios
   .get(`https://api.github.com/users/deejayeaster/followers`)
   .then(follower => {
-    console.log("these are followers", follower);
-    console.log("returned followers data", follower.data);
     follower.data.forEach(person => {
       followersArray.push(person.login);
     });
-    console.log("created arr", followersArray);
 
-    followersArray.forEach(follower => {
-      axios
-        .get(`https://api.github.com/users/${follower}`)
-        .then(users => {
-          console.log("this is the data", users.data);
-          const followerElm = createCards(users.data);
-          cards.appendChild(followerElm);
-        })
-
-        .catch(error => {
-          console.log("ERROR:", error);
-        });
+    return followersArray;
+  })
+  .then(followers => {
+    followers.forEach(follower => {
+      axios.get(`https://api.github.com/users/${follower}`).then(res => {
+        cards.append(createCards(res.data));
+      });
     });
   })
-
-  .catch(error => {
-    console.log("ERROR:", error);
+  .catch(err => {
+    console.log("Error has occurred: ", err);
   });
 
 /* Step 3: Create a function that accepts a single object as its only argument,
